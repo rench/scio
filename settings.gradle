@@ -1,3 +1,4 @@
 rootProject.name = 'scio'
 
 include 'scio-config'
+include 'scio-consul-config'

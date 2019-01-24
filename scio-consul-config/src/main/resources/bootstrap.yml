@@ -1,0 +1,17 @@
+spring:
+  cloud:
+    consul:
+      host: localhost
+      port: 8500
+      config:
+        enabled: true
+        failFast: true
+        format: YAML # YAML/PROPERTIES
+        prefix: configuration
+        defaultContext: apps
+        profileSeparator: '/' #::
+        dataKey: cfg # default: data
+        watch:
+           enable: true
+           delay: 1000
+      

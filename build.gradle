@@ -18,7 +18,7 @@ allprojects {
 }
 
 ext {
-    set('springCloudVersion', 'Greenwich.RC2')
+    set('springCloudVersion', 'Greenwich.RELEASE')
 }
 subprojects{
     group = 'com.scio.cloud'
