@@ -1,0 +1,23 @@
+logging:
+  file: ${spring.application.name}.log
+  level:
+     root: INFO
+     com:
+        scio: DEBUG
+server:
+   port: 8000
+spring:
+   application:
+      name: scio-config
+   cloud:
+      config:
+         server:
+           git:
+             uri: https://github.com/rench/scio-config-repo.git
+             searchPaths: config-repo
+             username: 
+             password: 
+           native:
+             search-locations: classpath:/config-repo
+   profiles:
+      active: git
