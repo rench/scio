@@ -1,0 +1,12 @@
+spring:
+  cloud:
+    nacos:
+      config:
+        failFast: true
+        enabled: true
+        serverAddr: 127.0.0.1:8848
+        fileExtension: yaml # properties
+        refresh:
+           enabled: true
+        
+      

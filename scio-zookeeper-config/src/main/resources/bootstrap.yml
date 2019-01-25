@@ -1,0 +1,15 @@
+spring:
+  cloud:
+    zookeeper:
+      connectString: 127.0.0.1:2181
+      config:
+        enabled: true
+        failFast: true
+        format: YAML # YAML/PROPERTIES
+        root: configuration # config
+        #defaultContext: apps
+        profileSeparator: '/' #::
+        watch:
+           enable: true
+           delay: 1000
+      

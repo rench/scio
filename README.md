@@ -5,7 +5,8 @@
 ### config
 - [ ] spring-cloud-config
 - [ ] spring-cloud-consul
-- [ ] nacos
+- [ ] spring-cloud-nacos
+- [ ] spring-cloud-zookeeper
 
 ### registry
 - [ ] eureka

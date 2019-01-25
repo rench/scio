@@ -2,3 +2,5 @@ rootProject.name = 'scio'
 
 include 'scio-config'
 include 'scio-consul-config'
+include 'scio-nacos-config'
+include 'scio-zookeeper-config'
