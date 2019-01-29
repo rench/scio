@@ -5,10 +5,10 @@ spring:
       config:
         enabled: true
         failFast: true
-        format: YAML # YAML/PROPERTIES
+        format: PROPERTIES # YAML/PROPERTIES
         root: configuration # config
-        #defaultContext: apps
-        profileSeparator: '/' #::
+        defaultContext: apps
+        profileSeparator: ',' #::
         watch:
            enable: true
            delay: 1000
