@@ -10,6 +10,6 @@ jobs:
     resource_class: large
     steps:
       - checkout
-      - run
-          name: "build jar"
+      - run:
+          name: build jar
           command: ./gradlew build -x test
