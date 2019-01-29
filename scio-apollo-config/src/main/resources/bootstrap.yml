@@ -1,0 +1,7 @@
+apollo:
+   meta: http://127.0.0.1
+   bootstrap:
+      enabled: true
+      namespaces: application,FX.apollo
+      eagerLoad:
+         enabled: false

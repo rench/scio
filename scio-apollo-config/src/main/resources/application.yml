@@ -1,0 +1,13 @@
+logging:
+  file: ${spring.application.name}.log
+  level:
+     root: INFO
+     com:
+        scio: DEBUG
+server:
+   port: 7999
+spring:
+   application:
+      name: scio-nacos-config
+   profiles:
+      active: dev

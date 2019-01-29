@@ -1,0 +1,7 @@
+dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.cloud:spring-cloud-context'
+    // https://mvnrepository.com/artifact/com.ctrip.framework.apollo/apollo-client
+    implementation 'com.ctrip.framework.apollo:apollo-client:1.2.0'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+}
