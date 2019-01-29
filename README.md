@@ -4,9 +4,10 @@
 ## projects
 ### config
 - [ ] spring-cloud-config
-- [ ] spring-cloud-consul
-- [ ] spring-cloud-nacos
-- [ ] spring-cloud-zookeeper
+- [ ] spring-cloud-consul-config
+- [ ] spring-cloud-nacos-config
+- [ ] spring-cloud-zookeeper-config
+- [ ] spring-cloud-apollo-config
 
 ### registry
 - [ ] eureka
