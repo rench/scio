@@ -5,3 +5,6 @@ include 'scio-consul-config'
 include 'scio-nacos-config'
 include 'scio-zookeeper-config'
 include 'scio-apollo-config'
+
+include 'scio-eureka-server'
+include 'scio-eureka-client'

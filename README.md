@@ -3,14 +3,14 @@
 
 ## projects
 ### config
-- [ ] spring-cloud-config
-- [ ] spring-cloud-consul-config
-- [ ] spring-cloud-nacos-config
-- [ ] spring-cloud-zookeeper-config
-- [ ] spring-cloud-apollo-config
+- [ ] scio-config
+- [ ] scio-consul-config
+- [ ] scio-nacos-config
+- [ ] scio-zookeeper-config
+- [ ] scio-apollo-config
 
 ### registry
-- [ ] eureka
+- [ ] scio-eureka-server
 - [ ] nacos
 - [ ] zookeeper
 

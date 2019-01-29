@@ -1,0 +1,23 @@
+logging:
+  file: ${spring.application.name}.log
+  level:
+     root: INFO
+     com:
+        scio: DEBUG
+server:
+   port: 8001
+spring:
+   application:
+      name: scio-eureka-server
+
+eureka:
+  instance:
+    hostname: localhost
+  server:
+     enable-self-preservation: false
+     eviction-interval-timer-in-ms: 15000
+  client:
+    registerWithEureka: false
+    fetchRegistry: false
+    serviceUrl:
+      defaultZone: http://${eureka.instance.hostname}:${server.port}/eureka/
