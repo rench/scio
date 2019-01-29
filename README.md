@@ -3,7 +3,8 @@
 
 ## projects
 ### config
-- [ ] scio-config
+- [ ] scio-config-server
+- [ ] scio-cloud-config
 - [ ] scio-consul-config
 - [ ] scio-nacos-config
 - [ ] scio-zookeeper-config

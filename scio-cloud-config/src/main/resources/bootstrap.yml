@@ -1,0 +1,7 @@
+CONFIG_SERVER_URL: http://localhost:8000
+spring:
+  cloud:
+    config:
+      enabled: true
+      fail-fast: true
+      uri: ${CONFIG_SERVER_URL}
