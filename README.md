@@ -3,15 +3,16 @@
 
 ## projects
 ### config
-- [ ] scio-config-server
-- [ ] scio-cloud-config
-- [ ] scio-consul-config
-- [ ] scio-nacos-config
-- [ ] scio-zookeeper-config
-- [ ] scio-apollo-config
+- [x] scio-config-server
+- [x] scio-cloud-config
+- [x] scio-consul-config
+- [x] scio-nacos-config
+- [x] scio-zookeeper-config
+- [x] scio-apollo-config
 
 ### registry
-- [ ] scio-eureka-server
+- [x] scio-eureka-server
+- [x] scio-eureka-client
 - [ ] nacos
 - [ ] zookeeper
 
