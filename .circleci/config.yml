@@ -11,5 +11,5 @@ jobs:
     steps:
       - checkout
       - run
-          name: build jar
+          name: "build jar"
           command: ./gradlew build -x test
