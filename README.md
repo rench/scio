@@ -19,7 +19,7 @@
 
 ### gateway & route
 - [x] scio-cloud-gateway 8002
-- [ ] spring-cloud-netflix-zuul
+- [x] scio-cloud-zuul 8002
 
 ### monitor & protection
 - [ ] spring-cloud-zuul-ratelimit(limitprotection)
