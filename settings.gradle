@@ -9,3 +9,4 @@ include 'scio-apollo-config'
 
 include 'scio-eureka-server'
 include 'scio-eureka-client'
+include 'scio-nacos-client'

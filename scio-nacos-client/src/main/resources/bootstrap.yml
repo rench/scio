@@ -1,0 +1,14 @@
+spring:
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 127.0.0.1:8848
+      config:
+        failFast: false
+        enabled: false
+        serverAddr: 127.0.0.1:8848
+        fileExtension: yaml # properties
+        refresh:
+           enabled: true
+
+ribbon.nacos.enabled: true

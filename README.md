@@ -1,4 +1,5 @@
 # SCIO Spring Cloud In One
+[![CircleCI](https://circleci.com/gh/rench/scio.svg?style=svg)](https://circleci.com/gh/rench/scio)
 > Spring Cloud In One is a simple demo project that can also be used for rapid development of scaffolding projects. The project includes the project and technology stack that spring cloud currently has access to.
 
 ## projects
@@ -13,7 +14,7 @@
 ### registry
 - [x] scio-eureka-server
 - [x] scio-eureka-client
-- [ ] nacos
+- [x] scio-nacos-client
 - [ ] zookeeper
 
 ### gateway & route
