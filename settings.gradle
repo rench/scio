@@ -8,5 +8,6 @@ include 'scio-zookeeper-config'
 include 'scio-apollo-config'
 
 include 'scio-eureka-server'
-include 'scio-eureka-client'
-include 'scio-nacos-client'
+include 'scio-eureka-discovery'
+include 'scio-nacos-discovery'
+include 'scio-zookeeper-discovery'

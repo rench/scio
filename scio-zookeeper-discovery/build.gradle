@@ -1,0 +1,8 @@
+dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    compile('org.springframework.cloud:spring-cloud-starter-zookeeper-discovery'){
+        exclude group: 'org.apache.zookeeper', module: 'zookeeper'
+    }
+    compile group: 'org.apache.zookeeper', name: 'zookeeper', version: '3.4.9'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+}
