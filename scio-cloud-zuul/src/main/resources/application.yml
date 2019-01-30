@@ -1,0 +1,34 @@
+logging:
+  file: ${spring.application.name}.log
+  level:
+     root: INFO
+     com:
+        scio: DEBUG
+server:
+   port: 8002
+eureka:
+  instance:
+    hostname: localhost
+  client:
+    registerWithEureka: true
+    fetchRegistry: true
+    serviceUrl:
+      defaultZone: http://${eureka.instance.hostname}:8001/eureka/
+spring:
+   application:
+      name: scio-cloud-zuul
+   profiles:
+      active: dev
+#Doc: https://cloud.spring.io/spring-cloud-static/spring-cloud-netflix/2.1.0.RELEASE/single/spring-cloud-netflix.html#netflix-zuul-reverse-proxy
+zuul:
+  ignoredServices: '*'
+  routes:
+    scio-eureka-discovery: /scio-eureka-discovery/**
+    scio-eureka-discovery-mirror:
+      path: /scio-eureka-discovery-mirror/**
+      serviceId: scio-eureka-discovery
+      stripPrefix: true
+    config-server:
+      path: /config/**
+      url: http://localhost:8000
+      stripPrefix: true
