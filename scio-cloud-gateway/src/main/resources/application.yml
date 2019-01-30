@@ -1,0 +1,50 @@
+logging:
+  file: ${spring.application.name}.log
+  level:
+     root: INFO
+     com:
+        scio: DEBUG
+server:
+   port: 8002
+eureka:
+  instance:
+    hostname: localhost
+  client:
+    registerWithEureka: true
+    fetchRegistry: true
+    serviceUrl:
+      defaultZone: http://${eureka.instance.hostname}:8001/eureka/
+spring:
+   application:
+      name: scio-cloud-gateway
+   profiles:
+      active: dev
+   #https://cloud.spring.io/spring-cloud-static/spring-cloud-gateway/2.1.0.RELEASE/single/spring-cloud-gateway.html
+   cloud:
+      gateway:
+         routes:
+            - id: config-server
+              uri: http://localhost:8000
+              predicates:
+              - Path=/config/**
+              filters:
+              - StripPrefix=1
+            - id: baidu
+              uri: https://www.baidu.com
+              predicates:
+              - Path=/baidu/**
+              filters:
+              - StripPrefix=1
+         discovery:
+            locator:
+               enabled: true
+               lowerCaseServiceId: false
+               predicates:
+                  - name: Path
+                    args:
+                      pattern: "'/'+serviceId.toLowerCase()+'/**'"
+               filters:
+                  - name: RewritePath
+                    args:
+                       regexp: "'/' + serviceId.toLowerCase() + '/(?<remaining>.*)'"
+                       replacement: "'/${remaining}'"

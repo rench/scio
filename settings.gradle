@@ -11,3 +11,5 @@ include 'scio-eureka-server'
 include 'scio-eureka-discovery'
 include 'scio-nacos-discovery'
 include 'scio-zookeeper-discovery'
+
+include 'scio-cloud-gateway'

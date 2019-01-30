@@ -4,21 +4,21 @@
 
 ## projects
 ### config
-- [x] scio-config-server
-- [x] scio-cloud-config
-- [x] scio-consul-config
-- [x] scio-nacos-config
-- [x] scio-zookeeper-config
-- [x] scio-apollo-config
+- [x] scio-config-server 8000
+- [x] scio-cloud-config 7999
+- [x] scio-consul-config 7999
+- [x] scio-nacos-config 7999
+- [x] scio-zookeeper-config 7999
+- [x] scio-apollo-config 7999
 
 ### registry
-- [x] scio-eureka-server
-- [x] scio-eureka-discovery
-- [x] scio-nacos-discovery
-- [x] scio-zookeeper-discovery
+- [x] scio-eureka-server 8001
+- [x] scio-eureka-discovery 7998
+- [x] scio-nacos-discovery 7998
+- [x] scio-zookeeper-discovery 7998
 
 ### gateway & route
-- [ ] spring-cloud-gateway
+- [x] scio-cloud-gateway 8002
 - [ ] spring-cloud-netflix-zuul
 
 ### monitor & protection
