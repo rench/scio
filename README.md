@@ -13,9 +13,9 @@
 
 ### registry
 - [x] scio-eureka-server
-- [x] scio-eureka-client
-- [x] scio-nacos-client
-- [ ] zookeeper
+- [x] scio-eureka-discovery
+- [x] scio-nacos-discovery
+- [x] scio-zookeeper-discovery
 
 ### gateway & route
 - [ ] spring-cloud-gateway
