@@ -1,0 +1,46 @@
+logging:
+  file: ${spring.application.name}.log
+  level:
+     root: INFO
+     com:
+        scio: DEBUG
+server:
+   port: 8002
+eureka:
+  instance:
+    hostname: localhost
+  client:
+    registerWithEureka: true
+    fetchRegistry: true
+    serviceUrl:
+      defaultZone: http://${eureka.instance.hostname}:8001/eureka/
+spring:
+   application:
+      name: scio-cloud-zuul-ratelimit
+   profiles:
+      active: dev
+   redis:
+      host: 127.0.0.1
+      port: 6379
+#Doc: https://cloud.spring.io/spring-cloud-static/spring-cloud-netflix/2.1.0.RELEASE/single/spring-cloud-netflix.html#netflix-zuul-reverse-proxy
+zuul:
+  ignoredServices: '*'
+  routes:
+    proxy-baidu:
+      path: /baidu/**
+      url: https://www.baidu.com
+      stripPrefix: true
+  ratelimit:
+    key-prefix: scio-zuul-ratelimit
+    enabled: true
+    repository: REDIS
+    behind-proxy: true
+    default-policy-list: #optional - will apply unless specific policy exists
+      - limit: 10 #optional - request number limit per refresh interval window
+        quota: 1000 #optional - request time limit per refresh interval window (in seconds)
+        refresh-interval: 60 #default value (in seconds)
+        type: #optional
+          - user
+          - origin
+          - url
+          - httpmethod
