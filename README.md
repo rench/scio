@@ -22,9 +22,9 @@
 - [x] scio-cloud-zuul 8002
 
 ### monitor & protection
-- [ ] spring-cloud-zuul-ratelimit(limitprotection)
+- [x] scio-cloud-zuul-ratelimit 8002
+- [x] scio-cloud-sentinel 7997
 - [ ] spring-cloud-nextfix-hystrix(protection,monitor)
-- [ ] spring-cloud-alibaba-sentinel(limitprotection)
 - [ ] spring-cloud-netflix-turbine(monitor)
 
 ### tracing
