@@ -14,3 +14,6 @@ include 'scio-zookeeper-discovery'
 
 include 'scio-cloud-gateway'
 include 'scio-cloud-zuul'
+
+include 'scio-cloud-zuul-ratelimit'
+include 'scio-cloud-sentinel'

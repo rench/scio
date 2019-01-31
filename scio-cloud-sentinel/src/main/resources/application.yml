@@ -1,0 +1,17 @@
+logging:
+  file: ${spring.application.name}.log
+  level:
+     root: INFO
+     com:
+        scio: DEBUG
+server:
+   port: 7997
+spring:
+   application:
+      name: scio-cloud-sentinel
+   profiles:
+      active: dev
+   cloud:
+      sentinel:
+         transport:
+            dashboard: localhost:8080
