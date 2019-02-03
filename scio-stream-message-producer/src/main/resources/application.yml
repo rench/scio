@@ -1,0 +1,20 @@
+server:
+  port: 7996
+spring:
+   application:
+      name: scio-stream-message-producer
+   rabbitmq:
+     host: 192.168.1.13
+     port: 5672
+     username: cloud
+     password: cloud
+scio:
+  cloud:
+    stream:
+      message:
+        publisher:
+          enabled: true
+          channel: publish-message
+#for publiser        
+spring.cloud.stream.bindings.publish-message.destination: scio.cloud.message.queue.prod
+spring.cloud.stream.bindings.publish-message.content-type: application/json

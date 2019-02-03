@@ -1,0 +1,37 @@
+server:
+  port: 7995
+spring:
+   application:
+      name: scio-stream-message-consumer
+   rabbitmq:
+     host: 192.168.1.13
+     port: 5672
+     username: cloud
+     password: cloud
+scio:
+  cloud:
+    stream:
+      message:
+        receiver:
+          enabled: true
+          channel: receive-message
+#for receiver
+spring.cloud.stream.bindings.receive-message.destination: scio.cloud.message.queue.prod
+spring.cloud.stream.bindings.receive-message.content-type: application/json
+spring.cloud.stream.bindings.receive-message.group: default-group
+
+#the maximum number of unacked messages a single consumer(thread) can consume
+spring.cloud.stream.rabbit.bindings.receive-message.consumer.prefetch: 5
+spring.cloud.stream.rabbit.bindings.receive-message.consumer.acknowledge-mode: MANUAL
+
+#default consumer config
+spring.cloud.stream.default.consumer.concurrency: 10
+spring.cloud.stream.default.consumer.maxConcurrency: 10
+
+#for example:custom log sender with receiver,you must implmentation Receiver interface with @StreamListener on onMessage method.
+spring.cloud.stream.bindings.log2.destination: scio.cloud.message.queue.prod
+spring.cloud.stream.bindings.log2.content-type: application/json
+spring.cloud.stream.bindings.log2.group: log2-group
+spring.cloud.stream.rabbit.bindings.log2.consumer.acknowledge-mode: MANUAL
+
+

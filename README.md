@@ -27,6 +27,12 @@
 - [ ] spring-cloud-nextfix-hystrix(protection,monitor)
 - [ ] spring-cloud-netflix-turbine(monitor)
 
+### stream message
+
+- [x] scio-cloud-stream-message-common
+- [x] scio-cloud-stream-message-producer 7996
+- [x] scio-cloud-stream-message-consumer 7995
+
 ### tracing
 - [ ] spring-cloud-sleuth+zipkin
 - [ ] spring-boot-admin
