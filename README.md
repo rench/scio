@@ -29,9 +29,9 @@
 
 ### stream message
 
-- [x] scio-cloud-stream-message-common
-- [x] scio-cloud-stream-message-producer 7996
-- [x] scio-cloud-stream-message-consumer 7995
+- [x] scio-stream-message-common
+- [x] scio-stream-message-producer 7996
+- [x] scio-stream-message-consumer 7995
 
 ### tracing
 - [ ] spring-cloud-sleuth+zipkin
