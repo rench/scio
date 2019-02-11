@@ -1,7 +1,26 @@
+apply plugin: 'org.springframework.boot'
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.cloud:spring-cloud-context'
     // https://mvnrepository.com/artifact/com.ctrip.framework.apollo/apollo-client
     implementation 'com.ctrip.framework.apollo:apollo-client:1.2.0'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
+}
+
+task pathingJar(type: Jar) {
+    dependsOn configurations.runtime
+    appendix = 'pathing'
+    doFirst {
+        manifest {
+            attributes "Class-Path": configurations.runtime.files.collect {
+                it.toURL().toString().replaceFirst('/file:/+/', '/')
+                }.join(' ')
+        }
+    }
+}
+bootRun {
+    dependsOn pathingJar
+    doFirst {
+        classpath = files("$buildDir/classes/main", "$buildDir/resources/main", pathingJar.archivePath)
+    }
 }
