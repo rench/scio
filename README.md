@@ -24,7 +24,7 @@
 ### monitor & protection
 - [x] scio-cloud-zuul-ratelimit 8002
 - [x] scio-cloud-sentinel 7997
-- [ ] spring-cloud-nextfix-hystrix(protection,monitor)
+- [x] scio-cloud-hystrix 7994
 - [ ] spring-cloud-netflix-turbine(monitor)
 
 ### stream message
