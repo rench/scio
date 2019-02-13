@@ -21,3 +21,5 @@ include 'scio-cloud-sentinel'
 include 'scio-stream-message-common'
 include 'scio-stream-message-producer'
 include 'scio-stream-message-consumer'
+
+include 'scio-cloud-hystrix'

@@ -1,0 +1,36 @@
+logging:
+  file: ${spring.application.name}.log
+  level:
+     root: INFO
+     com:
+        scio: DEBUG
+server:
+   port: 7994
+eureka:
+  instance:
+    hostname: localhost
+  client:
+    registerWithEureka: true
+    fetchRegistry: true
+    serviceUrl:
+      defaultZone: http://${eureka.instance.hostname}:8001/eureka/
+spring:
+   application:
+      name: scio-cloud-hystrix
+   profiles:
+      active: dev
+management:
+  endpoints:
+    web:
+      base-path: /actuator
+      exposure:
+         include: hystrix.stream,health,info,shutdown
+#https://docs.spring.io/spring-boot/docs/2.1.2.RELEASE/reference/htmlsingle/#production-ready-endpoints-enabling-endpoints
+management.endpoints.enabled-by-default: false
+management.endpoint.info.enabled: true
+management.endpoint.health.enabled: true
+management.endpoint.shutdown.enabled: true
+management.endpoint.hystrix.stream.enabled: true
+#https://docs.spring.io/spring-boot/docs/2.1.2.RELEASE/reference/htmlsingle/#production-ready-customizing-management-server-context-path
+#http://http://localhost:7994/actuator/hystrix-stream
+management.endpoints.web.path-mapping.hystrix.stream: hystrix-stream
