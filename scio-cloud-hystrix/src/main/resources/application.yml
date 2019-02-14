@@ -9,11 +9,20 @@ server:
 eureka:
   instance:
     hostname: localhost
+    metadata-map.cluster: default
   client:
     registerWithEureka: true
     fetchRegistry: true
     serviceUrl:
       defaultZone: http://${eureka.instance.hostname}:8001/eureka/
+#doc: https://www.cnblogs.com/allalongx/p/8383757.html
+turbine:
+  stream.port: 7994
+  aggregator:
+    clusterConfig: default
+  appConfig: scio-cloud-hystrix
+  #clusterNameExpression: new String("default-cluster")
+  clusterNameExpression: "'default'"
 spring:
    application:
       name: scio-cloud-hystrix
@@ -32,5 +41,5 @@ management.endpoint.health.enabled: true
 management.endpoint.shutdown.enabled: true
 management.endpoint.hystrix.stream.enabled: true
 #https://docs.spring.io/spring-boot/docs/2.1.2.RELEASE/reference/htmlsingle/#production-ready-customizing-management-server-context-path
-#http://http://localhost:7994/actuator/hystrix-stream
-management.endpoints.web.path-mapping.hystrix.stream: hystrix-stream
+#http://http://localhost:7994/actuator/hystrix.stream
+management.endpoints.web.path-mapping.hystrix.stream: hystrix.stream

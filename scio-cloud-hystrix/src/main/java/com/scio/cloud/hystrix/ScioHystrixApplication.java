@@ -4,12 +4,16 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.circuitbreaker.EnableCircuitBreaker;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.cloud.netflix.hystrix.dashboard.EnableHystrixDashboard;
+import org.springframework.cloud.netflix.turbine.EnableTurbine;
 import org.springframework.context.annotation.ComponentScan;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -29,6 +33,7 @@ import com.netflix.hystrix.contrib.javanica.annotation.HystrixProperty;
 @EnableDiscoveryClient
 @EnableCircuitBreaker
 @EnableHystrixDashboard
+@EnableTurbine
 @ComponentScan(basePackages = "com.scio.cloud.hystrix")
 public class ScioHystrixApplication {
 
@@ -66,6 +71,30 @@ public class ScioHystrixApplication {
           Thread.currentThread().getThreadGroup().getName(),
           Thread.currentThread().getName());
       return "busy";
+    }
+  }
+
+  @Controller
+  static class WebController {
+    private Integer streamPort;
+    private String clusterName;
+
+    @Autowired
+    public WebController(
+        @Value("${turbine.stream.port}") Integer streamPort,
+        @Value("${turbine.aggregator.clusterConfig:default}") String clusterName) {
+      this.streamPort = streamPort;
+      this.clusterName = clusterName;
+    }
+
+    @RequestMapping(path = {"", "/"})
+    public String index() {
+      // redirect custom port.
+      // turbine stream aggregator is installed in the same node as hystrix dashboard
+      return "redirect:/hystrix/monitor?stream=http://localhost:"
+          + streamPort
+          + "/turbine.stream?cluster="
+          + clusterName;
     }
   }
 }
