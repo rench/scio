@@ -33,7 +33,8 @@
 - [x] scio-stream-message-consumer 7995
 
 ### tracing
-- [ ] spring-cloud-sleuth+zipkin
+- [x] scio-cloud-sleuth 7993
+- [x] scio-cloud-zipkin 8003
 - [ ] spring-boot-admin
 - [ ] pinpoint
 
