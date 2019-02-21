@@ -1,0 +1,25 @@
+logging:
+  file: ${spring.application.name}.log
+  level:
+     root: INFO
+     com:
+        scio: DEBUG
+server:
+   port: 7993
+eureka:
+  instance:
+    hostname: localhost
+  client:
+    registerWithEureka: true
+    fetchRegistry: true
+    serviceUrl:
+      defaultZone: http://${eureka.instance.hostname}:8001/eureka/
+spring:
+   application:
+      name: scio-cloud-sleuth
+   profiles:
+      active: dev
+   zipkin:
+     base-url: http://localhost:8003
+     sender:
+       type: web

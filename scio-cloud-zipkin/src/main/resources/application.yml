@@ -1,0 +1,24 @@
+logging:
+  file: ${spring.application.name}.log
+  level:
+     root: INFO
+     com:
+        scio: DEBUG
+server:
+   port: 8003
+eureka:
+  instance:
+    hostname: localhost
+  client:
+    registerWithEureka: true
+    fetchRegistry: true
+    serviceUrl:
+      defaultZone: http://${eureka.instance.hostname}:8001/eureka/
+spring:
+   application:
+      name: scio-cloud-zipkin
+   profiles:
+      active: dev
+
+
+management.metrics.web.server.auto-time-requests: false

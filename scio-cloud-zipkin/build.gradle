@@ -1,0 +1,17 @@
+apply plugin: 'org.springframework.boot'
+dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-actuator'
+    //implementation 'org.springframework.cloud:spring-cloud-starter-netflix-eureka-client'
+    //implementation 'org.springframework.cloud:spring-cloud-starter-sleuth'
+    //implementation 'org.springframework.cloud:spring-cloud-starter-zipkin'
+    // https://mvnrepository.com/artifact/io.zipkin.java/zipkin-server
+    //implementation 'io.zipkin.java:zipkin-server:2.12.2'
+    
+    compile('io.zipkin.java:zipkin-server:2.12.2'){
+        exclude group: 'org.apache.logging.log4j', module: 'log4j-slf4j-impl'
+    }
+    
+    implementation 'io.zipkin.java:zipkin-autoconfigure-ui:2.12.2'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+}

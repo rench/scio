@@ -23,3 +23,6 @@ include 'scio-stream-message-producer'
 include 'scio-stream-message-consumer'
 
 include 'scio-cloud-hystrix'
+
+include 'scio-cloud-sleuth'
+include 'scio-cloud-zipkin'
