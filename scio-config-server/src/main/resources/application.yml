@@ -21,3 +21,8 @@ spring:
              search-locations: classpath:/config-repo
    profiles:
       active: git
+
+scio:
+  cloud:
+    config:
+      user: user
