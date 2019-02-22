@@ -28,6 +28,10 @@ spring:
       name: scio-cloud-hystrix
    profiles:
       active: dev
+   zipkin:
+     base-url: http://localhost:8003
+     sender:
+       type: web
 management:
   endpoints:
     web:

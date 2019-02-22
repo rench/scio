@@ -12,8 +12,11 @@ import org.springframework.cloud.client.circuitbreaker.EnableCircuitBreaker;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.cloud.netflix.hystrix.dashboard.EnableHystrixDashboard;
 import org.springframework.cloud.netflix.turbine.EnableTurbine;
+import org.springframework.cloud.openfeign.EnableFeignClients;
+import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -34,13 +37,46 @@ import com.netflix.hystrix.contrib.javanica.annotation.HystrixProperty;
 @EnableCircuitBreaker
 @EnableHystrixDashboard
 @EnableTurbine
+@EnableFeignClients
 @ComponentScan(basePackages = "com.scio.cloud.hystrix")
 public class ScioHystrixApplication {
 
   public static void main(String[] args) {
     SpringApplication.run(ScioHystrixApplication.class, args);
   }
+  /**
+   * Feign controller
+   *
+   * @author Wang.ch
+   * @date 2019-02-22 09:49:45
+   */
+  @RestController
+  static class FeignController {
 
+    @Autowired FeignService service;
+    /**
+     * request to scio-cloud-sleuth
+     *
+     * @return
+     */
+    @RequestMapping("/other")
+    public String other() {
+      return service.me();
+    }
+  }
+
+  @FeignClient("scio-cloud-sleuth")
+  static interface FeignService {
+    @GetMapping("/me")
+    String me();
+  }
+
+  /**
+   * hystrix test controller
+   *
+   * @author Wang.ch
+   * @date 2019-02-22 09:47:21
+   */
   @RestController
   public static class HystrixController {
     private static Logger LOG = LoggerFactory.getLogger(HystrixController.class);
@@ -64,7 +100,11 @@ public class ScioHystrixApplication {
       }
       return "scio-cloud-hystrix";
     }
-
+    /**
+     * fallback method
+     *
+     * @return
+     */
     public String fallback() {
       LOG.info(
           "fallback :{}-{}",
@@ -73,7 +113,12 @@ public class ScioHystrixApplication {
       return "busy";
     }
   }
-
+  /**
+   * turbine controller
+   *
+   * @author Wang.ch
+   * @date 2019-02-22 09:48:45
+   */
   @Controller
   static class WebController {
     private Integer streamPort;
