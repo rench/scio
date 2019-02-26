@@ -36,7 +36,7 @@
 - [x] scio-cloud-sleuth 7993
 - [x] scio-cloud-zipkin 8003
 - [x] scio-boot-admin 8004
-- [ ] pinpoint
+- [x] scio-cloud-pinpoint ?
 
 ### security
 - [ ] spring-cloud-security(oauth2.0)

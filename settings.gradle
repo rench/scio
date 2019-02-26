@@ -28,3 +28,4 @@ include 'scio-cloud-sleuth'
 include 'scio-cloud-zipkin'
 
 include 'scio-boot-admin'
+include 'scio-cloud-pinpoint'
