@@ -1,0 +1,37 @@
+logging:
+  file: ${spring.application.name}.log
+  level:
+     root: INFO
+     com:
+        scio: DEBUG
+server:
+   port: 8004
+spring:
+   application:
+      name: scio-boot-admin
+
+eureka:
+  instance:
+    hostname: localhost
+    #statusPageUrlPath: /info
+    #healthCheckUrlPath: /health
+  client:
+    registerWithEureka: true
+    fetchRegistry: true
+    serviceUrl:
+      defaultZone: http://${eureka.instance.hostname}:8001/eureka/
+
+#https://docs.spring.io/spring-boot/docs/2.1.2.RELEASE/reference/htmlsingle/#production-ready-endpoints
+management:
+   #endpoints:
+   #   enabled-by-default: false
+   endpoints:
+     web:
+       exposure:
+         include: "*" 
+   endpoint:
+      info:
+         enabled: true
+      health:
+         enabled: true
+         show-details: ALWAYS

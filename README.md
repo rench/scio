@@ -35,7 +35,7 @@
 ### tracing
 - [x] scio-cloud-sleuth 7993
 - [x] scio-cloud-zipkin 8003
-- [ ] spring-boot-admin
+- [x] scio-boot-admin 8004
 - [ ] pinpoint
 
 ### security
