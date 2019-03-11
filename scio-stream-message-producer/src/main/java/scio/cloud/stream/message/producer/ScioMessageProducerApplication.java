@@ -13,7 +13,12 @@ import com.scio.cloud.stream.message.model.StreamMessage.MessageType;
 import com.scio.cloud.stream.message.model.StreamMessage.SendSource;
 import com.scio.cloud.stream.message.publish.EnablePublisher;
 import com.scio.cloud.stream.message.publish.Publisher;
-
+/**
+ * Message Producer Application with publish api
+ *
+ * @author Wang.ch
+ * @date 2019-03-11 15:41:21
+ */
 @SpringBootApplication
 @EnablePublisher
 public class ScioMessageProducerApplication {

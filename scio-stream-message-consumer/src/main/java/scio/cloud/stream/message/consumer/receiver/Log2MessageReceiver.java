@@ -1,5 +1,7 @@
 package scio.cloud.stream.message.consumer.receiver;
 
+import java.util.concurrent.atomic.AtomicLong;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.amqp.support.AmqpHeaders;
@@ -14,10 +16,16 @@ import com.scio.cloud.stream.message.model.StreamMessage;
 import com.scio.cloud.stream.message.receive.Receiver;
 
 import scio.cloud.stream.message.consumer.receiver.config.Log2MessageBinder;
-
+/**
+ * customer receiver
+ *
+ * @author Wang.ch
+ * @date 2019-03-11 15:40:17
+ */
 @Component
 public class Log2MessageReceiver implements Receiver<StreamMessage> {
   private static final Logger LOG = LoggerFactory.getLogger(Log2MessageReceiver.class);
+  private AtomicLong atomicLong = new AtomicLong(1);
 
   @Override
   @StreamListener(Log2MessageBinder.INPUT)
@@ -28,10 +36,18 @@ public class Log2MessageReceiver implements Receiver<StreamMessage> {
     Long deliveryTag = message.getHeaders().get(AmqpHeaders.DELIVERY_TAG, Long.class);
     // always send ack
     try {
-      channel.basicAck(deliveryTag, false);
+      // channel.basicAck(deliveryTag, false);
+      if (atomicLong.incrementAndGet() % 3 == 0) {
+        // test for DLQ
+        LOG.info("basic nack");
+        channel.basicNack(deliveryTag, false, false);
+      } else {
+        channel.basicAck(deliveryTag, false);
+      }
     } catch (Exception e) {
       LOG.error("channle basicAck exception", e);
     }
+    // int i = 1 / 0;
   }
 
   @Configurable
