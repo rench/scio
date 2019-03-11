@@ -35,11 +35,13 @@ spring.cloud.stream.bindings.log2.group: log2-group
 spring.cloud.stream.rabbit.bindings.log2.consumer.acknowledge-mode: MANUAL
 spring.cloud.stream.bindings.log2.consumer.max-attempts: 1
 
+# https://github.com/spring-cloud/spring-cloud-stream-binder-rabbit/blob/5d53e79919fd2eaed22a0444930bc77c96128116/spring-cloud-stream-binder-rabbit-core/src/main/java/org/springframework/cloud/stream/binder/rabbit/properties/RabbitCommonProperties.java
 # http://cloud.spring.io/spring-cloud-static/spring-cloud-stream/2.1.2.RELEASE/single/spring-cloud-stream.html#_dlq_dead_letter_queue
 # effect when (acknowledge-mode: MANUAL and invoke Nack) or (acknowledge-mode: AUTO and throw error)
 spring.cloud.stream.rabbit.bindings.log2.consumer.auto-bind-dlq: true
 spring.cloud.stream.rabbit.bindings.log2.consumer.republish-to-dlq: true
-#spring.cloud.stream.rabbit.bindings.log2.consumer.dlq-ttl: 6000
+spring.cloud.stream.rabbit.bindings.log2.consumer.dlq-ttl: 6000
+spring.cloud.stream.rabbit.bindings.log2.consumer.ttl: 6000
 
 # for dlq
 spring.cloud.stream.bindings.log2-dlq.destination: scio.cloud.message.queue.prod.log2-group
