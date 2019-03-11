@@ -50,6 +50,7 @@
 - [ ] querydsl
 - [ ] jooq
 - [ ] mybatis-plus
+- [ ] BeetlSQL
 
 ### distributed database
 - [ ] sharding-jdbc
@@ -60,6 +61,7 @@
 - [ ] raincat
 - [ ] hmily
 - [ ] myth
+- [ ] fescar
 
 ### distributed lock
 - [ ] redisson-redis-lock
