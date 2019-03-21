@@ -29,3 +29,7 @@ include 'scio-cloud-zipkin'
 
 include 'scio-boot-admin'
 include 'scio-cloud-pinpoint'
+
+include 'scio-cloud-oauth2'
+include 'scio-cloud-oauth2-resource'
+include 'scio-cloud-oauth2-client'

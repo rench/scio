@@ -1,0 +1,57 @@
+spring.main.allow-bean-definition-overriding: true
+logging:
+  file: ${spring.application.name}.log
+  level:
+     root: INFO
+     com:
+        scio: DEBUG
+server:
+   port: 8005
+   use-forward-headers: true
+eureka:
+  instance:
+    hostname: localhost
+  client:
+    registerWithEureka: false
+    fetchRegistry: false
+    serviceUrl:
+      defaultZone: http://${eureka.instance.hostname}:8001/eureka/
+spring:
+   application:
+      name: scio-cloud-oauth2-client
+   profiles:
+      active: dev
+# https://docs.spring.io/spring-security-oauth2-boot/docs/2.1.0.RELEASE/reference/htmlsingle/#boot-features-security-oauth2-resource-server
+security:
+   basic:
+      enabled: false
+   oauth2:
+      resource:
+         userInfoUri: http://localhost:8003/userinfo
+         token-info-uri: http://localhost:8003/oauth/check_token
+         preferTokenInfo: false
+      client:
+         clientId: scio-cloud-oauth2-client
+         clientSecret: 48f854f3cee94afba7ae95a6c5ce9116
+         accessTokenUri: http://localhost:8003/oauth/token
+         userAuthorizationUri: http://localhost:8003/oauth/authorize
+         clientAuthenticationScheme: form
+         authorized-grant-types: client_credentials
+         grant-type: client_credentials
+      zuul-routes:
+         - scio-cloud-oauth2-resource
+      
+#Doc: https://cloud.spring.io/spring-cloud-static/spring-cloud-netflix/2.1.0.RELEASE/single/spring-cloud-netflix.html#netflix-zuul-reverse-proxy
+zuul:
+  ignoredServices: '*'
+  routes:
+    scio-cloud-oauth2-resource:
+      path: /res/**
+      url: http://localhost:8004
+      stripPrefix: true
+      
+proxy:
+  auth:
+    routes:
+       scio-cloud-oauth2-resource: oauth2
+zuul.sensitiveHeaders: Cookie,Set-Cookie
