@@ -41,7 +41,9 @@
 - [x] scio-cloud-pinpoint ?
 
 ### security
-- [ ] spring-cloud-security(oauth2.0)
+- [x] scio-cloud-oauth2 8003
+- [x] scio-cloud-oauth2-resource 8004
+- [x] scio-cloud-oauth2-client 8005
 - [ ] spring-remember-me
 - [ ] json-web-token
 

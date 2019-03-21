@@ -1,3 +1,4 @@
+*.tmp
 *~
 *.java.hsp
 *.sonarj
