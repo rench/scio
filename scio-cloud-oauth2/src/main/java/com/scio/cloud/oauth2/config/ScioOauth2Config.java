@@ -1,13 +1,20 @@
 package com.scio.cloud.oauth2.config;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
@@ -29,9 +36,14 @@ import org.springframework.security.oauth2.config.annotation.web.configuration.A
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableAuthorizationServer;
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerEndpointsConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerSecurityConfigurer;
+import org.springframework.security.oauth2.provider.token.TokenEnhancer;
+import org.springframework.security.oauth2.provider.token.TokenEnhancerChain;
 import org.springframework.security.oauth2.provider.token.TokenStore;
 import org.springframework.security.oauth2.provider.token.store.InMemoryTokenStore;
+import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
+import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
 import org.springframework.stereotype.Service;
+import org.springframework.util.FileCopyUtils;
 
 import com.google.common.collect.Maps;
 /**
@@ -43,14 +55,72 @@ import com.google.common.collect.Maps;
 @SuppressWarnings("deprecation")
 @Configuration
 public class ScioOauth2Config {
+
+  /**
+   * redis token store
+   *
+   * @return
+   */
+  @Bean
+  @ConditionalOnProperty(prefix = "security.oauth2", name = "storeType", havingValue = "redis")
+  public TokenStore redisTokenStore() {
+    // JdbcTokenStore,RedisTokenStore
+    // return new RedisTokenStore(null);
+    return null;
+  }
+
   /**
    * store oauth2 token in memory
    *
    * @return
    */
   @Bean
+  @ConditionalOnProperty(prefix = "security.oauth2", name = "storeType", havingValue = "memory")
   public TokenStore inMemoryTokenStore() {
     return new InMemoryTokenStore();
+  }
+  /**
+   * jwt token store
+   *
+   * @return
+   */
+  @Bean
+  @ConditionalOnProperty(prefix = "security.oauth2", name = "storeType", havingValue = "jwt")
+  public TokenStore jwtTokenStore() {
+    return new JwtTokenStore(converter());
+  }
+  /**
+   * jwt token convert
+   *
+   * @return
+   */
+  @Bean
+  @ConditionalOnProperty(prefix = "security.oauth2", name = "storeType", havingValue = "jwt")
+  public JwtAccessTokenConverter converter() {
+    JwtAccessTokenConverter convert = new JwtAccessTokenConverter();
+    // curl client1:123456@http://localhost:8003/oauth/token_key
+    // convert.setSigningKey("scio@2019");
+    try {
+      String rsaContent =
+          FileCopyUtils.copyToString(
+              new BufferedReader(
+                  new InputStreamReader(
+                      new ClassPathResource("scio.jwt.private.key").getInputStream())));
+      convert.setSigningKey(rsaContent);
+      rsaContent =
+          FileCopyUtils.copyToString(
+              new BufferedReader(
+                  new InputStreamReader(
+                      new ClassPathResource("scio.jwt.public.key").getInputStream())));
+      convert.setVerifierKey(rsaContent);
+    } catch (IOException e) {
+      e.printStackTrace();
+      convert.setSigningKey("scio@2019");
+    }
+    // KeyPair kp = new KeyStoreKeyFactory(new ClassPathResource("scio.jwt.jks"),
+    // null).getKeyPair("");
+    //    convert.setKeyPair(kp);
+    return convert;
   }
   /**
    * mock resource owners
@@ -92,7 +162,7 @@ public class ScioOauth2Config {
   @EnableWebSecurity
   @EnableGlobalMethodSecurity(prePostEnabled = true)
   @Order(1)
-  public static class WebSecurityConfig extends WebSecurityConfigurerAdapter {
+  public static class ScioWebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired private UserDetailsService userDetailsService;
 
     @Bean
@@ -145,11 +215,15 @@ public class ScioOauth2Config {
   @Configuration
   @EnableAuthorizationServer
   @Order(Ordered.LOWEST_PRECEDENCE)
-  public static class AuthorizationServerConfiguration
+  public static class ScioAuthorizationServerConfiguration
       extends AuthorizationServerConfigurerAdapter {
 
     @Autowired private AuthenticationManager authenticationManager;
     @Autowired private TokenStore tokenStore;
+
+    @Autowired(required = false)
+    private JwtAccessTokenConverter converter;
+
     @Autowired private UserDetailsService userDetailsService;
 
     @Override
@@ -166,9 +240,18 @@ public class ScioOauth2Config {
       endpoints.tokenStore(tokenStore).authenticationManager(authenticationManager);
       // DefaultTokenServices.refreshAccessToken need
       endpoints.userDetailsService(userDetailsService);
+      TokenEnhancerChain chain = new TokenEnhancerChain();
       // for custom token
-      endpoints.tokenEnhancer(new ScioOauth2TokenEnhancer());
-      // endpoints.accessTokenConverter(new DefaultAccessTokenConverter() {});
+      TokenEnhancer enhancer = new ScioOauth2TokenEnhancer();
+      List<TokenEnhancer> list = new ArrayList<>(2);
+      list.add(enhancer);
+      if (converter != null) {
+        list.add(converter);
+        // add convert
+        endpoints.accessTokenConverter(converter);
+      }
+      chain.setTokenEnhancers(list);
+      endpoints.tokenEnhancer(chain);
     }
 
     @Override
