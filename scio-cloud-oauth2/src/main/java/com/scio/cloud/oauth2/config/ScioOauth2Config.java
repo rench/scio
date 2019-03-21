@@ -36,6 +36,7 @@ import org.springframework.security.oauth2.config.annotation.web.configuration.A
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableAuthorizationServer;
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerEndpointsConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerSecurityConfigurer;
+import org.springframework.security.oauth2.provider.approval.TokenApprovalStore;
 import org.springframework.security.oauth2.provider.token.TokenEnhancer;
 import org.springframework.security.oauth2.provider.token.TokenEnhancerChain;
 import org.springframework.security.oauth2.provider.token.TokenStore;
@@ -229,14 +230,12 @@ public class ScioOauth2Config {
     @Override
     public void configure(AuthorizationServerEndpointsConfigurer endpoints) throws Exception {
       endpoints.pathMapping("/oauth/token", "/oauth/token");
-
       // /oauth/authorize：Authorized endpoint
       // /oauth/token：Token endpoint
       // /oauth/confirm_access：User confirms authorization to submit endpoint
       // /oauth/error：Authorization service error message endpoint
       // /oauth/check_token：Token resolution endpoint for resource service access
       // /oauth/token_key：Provide the endpoint of the public key, if you use a JWT token
-
       endpoints.tokenStore(tokenStore).authenticationManager(authenticationManager);
       // DefaultTokenServices.refreshAccessToken need
       endpoints.userDetailsService(userDetailsService);
@@ -251,7 +250,12 @@ public class ScioOauth2Config {
         endpoints.accessTokenConverter(converter);
       }
       chain.setTokenEnhancers(list);
+
       endpoints.tokenEnhancer(chain);
+      endpoints.authorizationCodeServices(new ScioOauth2CodeServices());
+      TokenApprovalStore tokenApprovalStore = new TokenApprovalStore();
+      tokenApprovalStore.setTokenStore(tokenStore);
+      endpoints.approvalStore(tokenApprovalStore);
     }
 
     @Override

@@ -12,10 +12,10 @@ import org.springframework.context.annotation.ComponentScan;
  * Dependencies: scio-eureka-server
  *
  * authorize url: http://localhost:8003/oauth/authorize?response_type=code&client_id=client1&redirect_uri=http://www.baidu.com
- * authorize code: http://localhost:8003/oauth/token 
- *                  -dgrant_type=authorization_code 
- *                  -dclient_id=client1 
- *                  -dclient_secret=123456 
+ * authorize code: http://localhost:8003/oauth/token
+ *                  -dgrant_type=authorization_code
+ *                  -dclient_id=client1
+ *                  -dclient_secret=123456
  *                  -dcode=ASp8Zb
  *                  -dredirect_uri=http://www.baidu.com
  * refesh_token: http://localhost:8003/oauth/token
@@ -23,20 +23,21 @@ import org.springframework.context.annotation.ComponentScan;
  *                -dclient_id=client1
  *                -dclient_secret=123456
  *                -drefresh_token=16ea4250-884f-4ca2-ac72-1c3d44550de0
- *                
+ *
  * password: http://localhost:8003/oauth/token
  *                -dgrant_type=password
  *                -dclient_id=client1
  *                -dclient_secret=123456
  *                -dusername=mp1
  *                -dpassword=mp1
- * 
- * client_credentials: http://localhost:8003/oauth/token 
- *                      -dgrant_type=client_credentials 
- *                      -dclient_id=client1 
+ *
+ * client_credentials: http://localhost:8003/oauth/token
+ *                      -dgrant_type=client_credentials
+ *                      -dclient_id=client1
  *                      -dclient_secret=123456
- * 
+ *
  * </pre>
+ *
  * @doc https://docs.spring.io/spring-security-oauth2-boot/docs/2.1.0.RELEASE/reference/htmlsingle/
  * @author Wang.ch
  * @date 2019-3-20 09:21:54
