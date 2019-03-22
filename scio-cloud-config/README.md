@@ -1,3 +1,11 @@
+## SCIO
+[![CircleCI](https://circleci.com/gh/rench/scio.svg?style=svg)](https://circleci.com/gh/rench/scio)
+[![Auth](https://img.shields.io/badge/Author-Wang.ch-blue.svg)](https://xuankejia.cn)
+[![GitHub stars](https://img.shields.io/github/stars/rench/scio.svg?style=social&label=Stars)](https://github.com/rench/scio)
+[![GitHub forks](https://img.shields.io/github/forks/rench/scio.svg?style=social&label=Fork)](https://github.com/rench/scio)
+
+---
+
 # Cause
 In the project, there is a file core.yml, which stores some basic configuration of the core module. The file is written in the same way as the yaml. E.g:
 ```
