@@ -36,7 +36,6 @@ import org.springframework.security.oauth2.config.annotation.web.configuration.A
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableAuthorizationServer;
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerEndpointsConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerSecurityConfigurer;
-import org.springframework.security.oauth2.provider.approval.TokenApprovalStore;
 import org.springframework.security.oauth2.provider.token.TokenEnhancer;
 import org.springframework.security.oauth2.provider.token.TokenEnhancerChain;
 import org.springframework.security.oauth2.provider.token.TokenStore;
@@ -253,9 +252,19 @@ public class ScioOauth2Config {
 
       endpoints.tokenEnhancer(chain);
       endpoints.authorizationCodeServices(new ScioOauth2CodeServices());
-      TokenApprovalStore tokenApprovalStore = new TokenApprovalStore();
-      tokenApprovalStore.setTokenStore(tokenStore);
-      endpoints.approvalStore(tokenApprovalStore);
+      // TokenApprovalStore tokenApprovalStore = new TokenApprovalStore();
+      // tokenApprovalStore.setTokenStore(tokenStore);
+      // endpoints.approvalStore(tokenApprovalStore);
+      // jwt token store -> TokenStoreUserApprovalHandler -> only check accessToken is validate to
+      // set approval
+      // in memory token store -> ApprovalStoreUserApprovalHandler -> recheck accessToken to set
+      // scope approval
+      // -------
+      // jwt token store -> TokenStoreUserApprovalHandler -> only check accessToken is validate to
+      // set approval
+      // in memory token store -> ApprovalStoreUserApprovalHandler -> recheck accessToken to set
+      // scope approval
+      // jwt token store  not real store token
     }
 
     @Override
