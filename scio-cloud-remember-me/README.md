@@ -6,7 +6,7 @@
 
 ----
 
-# Remember Me [中文]()
+# Remember Me [中文](https://github.com/rench/scio/tree/master/scio-cloud-remember-me/README_zh.md)
 ## Introduction
 * The Spring Security framework provides a token-based function to remember me. Generally, remember that my function is mainly used after the user enters the password for the first time in the current browser, and can enter the password for a while. You can access protected data endpoints even if the session fails.
 ## Implemention
