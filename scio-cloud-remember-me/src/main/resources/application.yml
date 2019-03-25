@@ -1,0 +1,21 @@
+logging:
+  file: ${spring.application.name}.log
+  level:
+     root: INFO
+     com:
+        scio: DEBUG
+server:
+   port: 8006
+eureka:
+  instance:
+    hostname: localhost
+  client:
+    registerWithEureka: false
+    fetchRegistry: false
+    serviceUrl:
+      defaultZone: http://${eureka.instance.hostname}:8001/eureka/
+spring:
+   application:
+      name: scio-cloud-remember-me
+   profiles:
+      active: dev

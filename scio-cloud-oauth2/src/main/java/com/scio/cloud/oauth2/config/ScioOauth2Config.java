@@ -130,7 +130,7 @@ public class ScioOauth2Config {
    */
   @Service
   public static class ScioUserDetailsService implements UserDetailsService {
-    /** mmock users */
+    /** mock users */
     private Map<String, String> users = Maps.newHashMap();
 
     public ScioUserDetailsService() {

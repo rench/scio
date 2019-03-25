@@ -44,7 +44,7 @@
 - [x] scio-cloud-oauth2 8003
 - [x] scio-cloud-oauth2-resource 8004
 - [x] scio-cloud-oauth2-client 8005
-- [ ] spring-remember-me
+- [x] scio-cloud-remember-me 8006
 - [ ] json-web-token
 
 ### orm
