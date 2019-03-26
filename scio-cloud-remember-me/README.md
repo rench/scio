@@ -97,4 +97,38 @@ public class ScioRememberMeSecurityConfig extends WebSecurityConfigurerAdapter {
   }
 }
 ```
+* ScioUserDetailsService
+```
+/**
+ * mock scio users
+ *
+ * @author Wang.ch
+ * @date 2019-03-25 09:05:21
+ */
+@Configuration
+public class ScioUserDetailsService implements UserDetailsService {
+  /** mock users */
+  private Map<String, String> users = new HashMap<>();
 
+  public ScioUserDetailsService() {
+    users.put("mp1", "{noop}mp1");
+    users.put("mp2", "{noop}mp2");
+  }
+
+  @Override
+  public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+    if (users.containsKey(username)) {
+      String noopPwd = users.get(username);
+      User u = new User(username, noopPwd, Arrays.asList(new SimpleGrantedAuthority("USER")));
+      return u;
+    } else {
+      throw new UsernameNotFoundException("user not found");
+    }
+  }
+}
+```
+## Use
+- formLogin is enabled in the configuration, and directly access *http://localhost:8006/login* to jump to the login interface.
+- Enter the username and password for this mock, **mp1:mp1**, check **Remember me on this computer**, submit.
+- Observe the returned cookie value **Cookie: remember-me=bXAxOjE1NTQ3NjkxNDUwNjE6YjBmNWM4Nzk1NzVjOWMzNWIxNjhkZDJlMDg0MTliZWM; JSESSIONID=B490108E0CFE931DC624C43DCCD02D94**, with a remember-me, this is the returned token, he has a valid time, revisit the browser after closing the browser *http://localhost:8006/info* , you can still access the information of the currently logged in user.
+- Tracking **TokenBasedRememberMeServices** The source code can be found to parse the remember-me field from the cookie, parse the value, then match the user information, then construct **RememberMeAuthenticationToken** to return, then call **authenticationManager. Authenticate** is authorized, the instance used is **RememberMeAuthenticationProvider**.

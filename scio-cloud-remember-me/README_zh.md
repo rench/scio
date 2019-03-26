@@ -97,3 +97,38 @@ public class ScioRememberMeSecurityConfig extends WebSecurityConfigurerAdapter {
   }
 }
 ```
+* ScioUserDetailsService
+```
+/**
+ * mock scio users
+ *
+ * @author Wang.ch
+ * @date 2019-03-25 09:05:21
+ */
+@Configuration
+public class ScioUserDetailsService implements UserDetailsService {
+  /** mock users */
+  private Map<String, String> users = new HashMap<>();
+
+  public ScioUserDetailsService() {
+    users.put("mp1", "{noop}mp1");
+    users.put("mp2", "{noop}mp2");
+  }
+
+  @Override
+  public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+    if (users.containsKey(username)) {
+      String noopPwd = users.get(username);
+      User u = new User(username, noopPwd, Arrays.asList(new SimpleGrantedAuthority("USER")));
+      return u;
+    } else {
+      throw new UsernameNotFoundException("user not found");
+    }
+  }
+}
+```
+## 使用
+- 配置中已开启formLogin，直接访问*http://localhost:8006/login*，跳转到登录界面
+- 输入配这中mock的用户名和密码，**mp1:mp1**，勾选中**Remember me on this computer**，提交。
+- 观察返回的cookie值 **Cookie: remember-me=bXAxOjE1NTQ3NjkxNDUwNjE6YjBmNWM4Nzk1NzVjOWMzNWIxNjhkZDJlMDg0MTliZWM; JSESSIONID=B490108E0CFE931DC624C43DCCD02D94** ，多了一个remember-me，这就是返回的token，他有一个有效时间，在关闭浏览器后重新访问 *http://localhost:8006/info*，依然可以访问当前登录用户的信息。
+- 跟踪 **TokenBasedRememberMeServices** 源码进去，能够发现会从cookie中解析remember-me字段，并对值进行解析，然后对用户信息进行匹配，然后构造 **RememberMeAuthenticationToken** 返回，然后调用 **authenticationManager.authenticate** 进行授权，使用的实例是**RememberMeAuthenticationProvider**。
