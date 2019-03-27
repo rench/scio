@@ -35,3 +35,4 @@ include 'scio-cloud-oauth2-resource'
 include 'scio-cloud-oauth2-client'
 
 include 'scio-cloud-remember-me'
+include 'scio-cloud-jwt'
