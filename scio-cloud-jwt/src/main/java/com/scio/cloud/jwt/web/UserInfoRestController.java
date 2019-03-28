@@ -2,8 +2,11 @@ package com.scio.cloud.jwt.web;
 
 import java.security.Principal;
 
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.scio.cloud.jwt.web.vo.QueryVo;
 /**
  * UserInfoRestController
  *
@@ -21,5 +24,10 @@ public class UserInfoRestController {
   @RequestMapping("/info")
   public String info(Principal principal) {
     return principal.getName();
+  }
+
+  @RequestMapping("/query")
+  public QueryVo query(@RequestBody QueryVo query) {
+    return query;
   }
 }
