@@ -16,7 +16,7 @@ import io.jsonwebtoken.SignatureAlgorithm;
  * @author Wang.ch
  * @date 2019-03-27 17:26:21
  */
-public final class JwtTokenUtils {
+public final class ScioJwtTokenUtils {
   // header
   public static final String TOKEN_HEADER = "Authorization";
   public static final String TOKEN_PREFIX = "Bearer ";
@@ -28,7 +28,14 @@ public final class JwtTokenUtils {
   private static final long EXPIRATION = 3600L;
   // one week after check remember
   private static final long EXPIRATION_REMEMBER = 604800L;
-
+  /**
+   * create token with provider parameters
+   *
+   * @param username
+   * @param roles
+   * @param isRememberMe
+   * @return
+   */
   public static String createToken(
       String username, Collection<GrantedAuthority> roles, boolean isRememberMe) {
     long expiration = isRememberMe ? EXPIRATION_REMEMBER : EXPIRATION;
@@ -43,15 +50,30 @@ public final class JwtTokenUtils {
         .setExpiration(new Date(System.currentTimeMillis() + expiration * 1000))
         .compact();
   }
-
+  /**
+   * get user name from token
+   *
+   * @param token
+   * @return
+   */
   public static String getUserName(String token) {
     return getTokenClaims(token).getSubject();
   }
-
+  /**
+   * get roles from token
+   *
+   * @param token
+   * @return
+   */
   public static String getRoles(String token) {
     return getTokenClaims(token).get(ROLE, String.class);
   }
-
+  /**
+   * get claims from token
+   *
+   * @param token
+   * @return
+   */
   public static Claims getTokenClaims(String token) {
     return Jwts.parser().setSigningKey(SECRET).parseClaimsJws(token).getBody();
   }

@@ -26,7 +26,7 @@ import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 /**
- * https://github.com/spring-projects/spring-security-oauth/issues/214
+ * https://www.callicoder.com/spring-boot-spring-security-jwt-mysql-react-app-part-2/
  *
  * @author Wang.ch
  * @date 2019-03-19 15:38:33
@@ -35,7 +35,7 @@ import org.springframework.stereotype.Service;
 @Configuration
 public class ScioJwtConfig {
   /**
-   * mock resource owners
+   * mock users
    *
    * @author Wang.ch
    * @date 2019-03-21 08:13:53
@@ -63,7 +63,7 @@ public class ScioJwtConfig {
   }
 
   /**
-   * resource owner web security before oauth2 authentication
+   * web security config
    *
    * @doc https://docs.spring.io/spring-security/site/docs/current/guides/html5/helloworld-boot.html
    * @doc https://github.com/shimingda/security
@@ -93,8 +93,8 @@ public class ScioJwtConfig {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
       // Define which links require user login privileges
-      JwtAuthenticationFilter f = new JwtAuthenticationFilter();
-      f.setAuthenticationManager(authenticationManager());
+      ScioJwtAuthorizationFilter authorizationFilter = new ScioJwtAuthorizationFilter();
+      authorizationFilter.setAuthenticationManager(authenticationManagerBean());
       http.requestMatchers()
           .antMatchers("/login", "/info")
           .and()
@@ -108,9 +108,8 @@ public class ScioJwtConfig {
           .disable()
           .csrf()
           .disable()
-          .addFilter(f)
-          .addFilter(new JwtAuthorizationFilter(authenticationManagerBean()));
-
+          .addFilter(authorizationFilter)
+          .addFilter(new ScioJwtAuthenticationFilter(authenticationManagerBean()));
       http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
     }
 

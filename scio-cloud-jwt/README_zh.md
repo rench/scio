@@ -4,42 +4,42 @@
 [![GitHub stars](https://img.shields.io/github/stars/rench/scio.svg?style=social&label=Stars)](https://github.com/rench/scio)
 [![GitHub forks](https://img.shields.io/github/forks/rench/scio.svg?style=social&label=Fork)](https://github.com/rench/scio)
 -----
-# scio-cloud-jwt [中文](https://github.com/rench/scio/tree/master/scio-cloud-jwt/README_zh.md)
+# scio-cloud-jwt
 > https://github.com/rench/scio/tree/master/scio-cloud-jwt
 ## Jwt - JSON Web Token
-### Principle
+### 原理
 - http://www.ruanyifeng.com/blog/2018/07/json_web_token-tutorial.html
-- The principle of JWT is that after the server is authenticated, a JSON object is generated and sent back to the user. Later, when the user communicates with the server, the JSON object is sent back. The server relies solely on this object to identify the user. In order to prevent users from tampering with the data, the server will add a signature when generating the object, and the server will not save any session data, that is, the server becomes stateless, which makes it easier to extend.
+- JWT 的原理是，服务器认证以后，生成一个 JSON 对象，发回给用户，以后，用户与服务端通信的时候，都要发回这个 JSON 对象。服务器完全只靠这个对象认定用户身份。为了防止用户篡改数据，服务器在生成这个对象的时候，会加上签名，服务器就不保存任何 session 数据了，也就是说，服务器变成无状态了，从而比较容易实现扩展。
 
-### Data structure
+### 数据结构
 > eyJhbGciOiJIUzUxMiJ9.eyJyb2xlIjoiVVNFUiIsImlzcyI6IldhbmcuY2giLCJzdWIiOiJtcDEiLCJpYXQiOjE1NTM2ODI1MTUsImV4cCI6MTU1MzY4NjExNX0.0FqNKPtk0fWscm9PopEEZ9ibiA1EFDz-uudTbAx_gQLWVKB3ifDFTVi8rTkd3UF6LCDaLl_kvZnPKbo-Rm0aYA
-- The JWT data structure is a very long string separated by a dot (.) into three parts. Note that there is no line break inside the JWT, just for the sake of display, write it into a few lines.
-- Three parts of JWT, **Header**, **Payload**, **Signature**.
-1) The **Header** section is a JSON object that describes the metadata of the JWT and contains two fields: alg, typ.
-2) **Payload** The Payload section is also a JSON object that holds the data that needs to be passed. The JWT specifies seven official fields for selection.
-> - iss (issuer): issuer
-> - exp (expiration time): expiration time
-> - sub (subject): topic
-> - aud (audience): Audience
-> - nbf (Not Before): Effective time
-> - iat (Issued At): Issue time
-> - jti (JWT ID): number
-> - In addition to the above fields, you can also add fields yourself, the essence is a map
-3) The **Signature** section is a signature of the first two sections to prevent data tampering. First, you need to specify a secret (secret). This key is known only to the server and cannot be disclosed to the user. Then, using the signature algorithm specified in the Header (default is HMAC SHA256), generate the signature according to the following formula.
+- JWT的数据结构是一个很长的字符串，中间用点（.）分隔成三个部分。注意，JWT 内部是没有换行的，这里只是为了便于展示，将它写成了几行。
+- JWT 的三个部分，**Header（头部）**， **Payload（负载）**，**Signature（签名）**。
+1) **Header** 部分是一个 JSON 对象，描述 JWT 的元数据，包含两个字段：alg，typ。
+2) **Payload** Payload 部分也是一个 JSON 对象，用来存放实际需要传递的数据。JWT 规定了7个官方字段，供选用。
+> - iss (issuer)：签发人
+> - exp (expiration time)：过期时间
+> - sub (subject)：主题
+> - aud (audience)：受众
+> - nbf (Not Before)：生效时间
+> - iat (Issued At)：签发时间
+> - jti (JWT ID)：编号
+> - 除了以上字段外，还可以自己添加字段，本质就是一个map
+3) **Signature** 部分是对前两部分的签名，防止数据篡改。首先，需要指定一个密钥（secret）。这个密钥只有服务器才知道，不能泄露给用户。然后，使用 Header 里面指定的签名算法（默认是 HMAC SHA256），按照下面的公式产生签名。
 ```
 HMACSHA256(
   base64UrlEncode(header) + "." +
   base64UrlEncode(payload),
   secret)
 ```
-> After calculating the signature, the header, Payload, and Signature are combined into a string, and each part is separated by "dot" (.), and can be returned to the user.
-4) **Base64URL** The algorithm for header and Payload serialization is Base64URL. This algorithm is basically similar to the Base64 algorithm, but with some minor differences.
-> JWT as a token, some occasions may be placed in a URL (such as api.scio.com/api/info?token=xxx). Base64 has three characters +, / and =, which have special meanings in the URL, so they are replaced: = omitted, + replaced with -, / replaced with _. This is the Base64URL algorithm.
+> 算出签名以后，把 Header、Payload、Signature 三个部分拼成一个字符串，每个部分之间用"点"（.）分隔，就可以返回给用户。
+4) **Base64URL** Header 和 Payload 串型化的算法是 Base64URL。这个算法跟 Base64 算法基本类似，但有一些小的不同。
+> JWT 作为一个令牌（token），有些场合可能会放到 URL（比如 api.scio.com/api/info?token=xxx）。Base64 有三个字符+、/和=，在 URL 里面有特殊含义，所以要被替换掉：=被省略、+替换成-，/替换成_ 。这就是 Base64URL 算法。
 
 ### Spring Boot JWT
-#### Configuring Spring Security and JWT
-- When generating JWT, the main point is to obtain the result of successful verification after the user name and password are verified, and the user name + authority and other information are encrypted by JWT to generate a token.
-- When using JWT, the main point is to resolve the user name and permissions by obtaining the token in the specified header before the identity authentication succeeds, and verify the expiration time, construct the authorization authentication result, and put it into *SecurityContextHolder* in.
+#### 配置Spring Security和JWT
+- 在产生JWT的时候，主要点是在用户名和密码验证通过后，获取验证成功的结果，将用户名+权限等信息用JWT进行加密产生token。
+- 在使用JWT的时候，主要点是在没有身份认证成功之前，通过获取指定的Header中的token解析出用户名和权限，同时对过期时间进行校验，构造授权认证结果，并放入*SecurityContextHolder*中。
 - **ScioWebSecurityConfig**
 ```
 /**
@@ -258,8 +258,8 @@ public final class ScioJwtTokenUtils {
 }
 ```
 
-#### Test
-- Get token
+#### 测试
+- 获取token
 ```
 curl -X POST \
   http://localhost:8007/login \
@@ -267,11 +267,11 @@ curl -X POST \
   -H 'Content-Type: application/x-www-form-urlencoded' \
   -d 'username=mp1&password=mp1'
 ```
-Will return in the header:
+在header中会返回：
 ```
 Authorization →eyJhbGciOiJIUzUxMiJ9.eyJyb2xlIjoiVVNFUiIsImlzcyI6IldhbmcuY2giLCJzdWIiOiJtcDEiLCJpYXQiOjE1NTM2ODI1MTUsImV4cCI6MTU1MzY4NjExNX0.0FqNKPtk0fWscm9PopEEZ9ibiA1EFDz-uudTbAx_gQLWVKB3ifDFTVi8rTkd3UF6LCDaLl_kvZnPKbo-Rm0aYA
 ```
-- Use token
+- 使用token
 ```
 curl -X GET \
   http://localhost:8007/info \

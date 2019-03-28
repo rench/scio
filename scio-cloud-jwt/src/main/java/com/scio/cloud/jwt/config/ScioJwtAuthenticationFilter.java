@@ -17,16 +17,16 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 
-import com.scio.cloud.jwt.util.JwtTokenUtils;
+import com.scio.cloud.jwt.util.ScioJwtTokenUtils;
 /**
- * jwt auto auth filter
+ * JwtAuthenticationFilter
  *
  * @author Wang.ch
  * @date 2019-03-27 18:12:37
  */
-public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
+public class ScioJwtAuthenticationFilter extends BasicAuthenticationFilter {
 
-  public JwtAuthorizationFilter(AuthenticationManager authenticationManager) {
+  public ScioJwtAuthenticationFilter(AuthenticationManager authenticationManager) {
     super(authenticationManager);
   }
 
@@ -34,22 +34,27 @@ public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
   protected void doFilterInternal(
       HttpServletRequest request, HttpServletResponse response, FilterChain chain)
       throws IOException, ServletException {
-    String token = request.getHeader(JwtTokenUtils.TOKEN_HEADER);
-    if (token == null || !token.startsWith(JwtTokenUtils.TOKEN_PREFIX)) {
+    String token = request.getHeader(ScioJwtTokenUtils.TOKEN_HEADER);
+    if (token == null || !token.startsWith(ScioJwtTokenUtils.TOKEN_PREFIX)) {
       chain.doFilter(request, response);
       return;
     }
-    UsernamePasswordAuthenticationToken authentication = getAuthentication(token);
+    UsernamePasswordAuthenticationToken authentication = retrieveAuthentication(token);
     if (authentication != null) {
       SecurityContextHolder.getContext().setAuthentication(authentication);
     }
     super.doFilterInternal(request, response, chain);
   }
-
-  private UsernamePasswordAuthenticationToken getAuthentication(String token) {
-    token = token.replace(JwtTokenUtils.TOKEN_PREFIX, "");
-    String username = JwtTokenUtils.getUserName(token);
-    String role = JwtTokenUtils.getRoles(token);
+  /**
+   * retrieve eAuthentication
+   *
+   * @param token
+   * @return
+   */
+  private UsernamePasswordAuthenticationToken retrieveAuthentication(String token) {
+    token = token.replace(ScioJwtTokenUtils.TOKEN_PREFIX, "");
+    String username = ScioJwtTokenUtils.getUserName(token);
+    String role = ScioJwtTokenUtils.getRoles(token);
     List<SimpleGrantedAuthority> roleList =
         Stream.of(Optional.ofNullable(role).orElse("").split(","))
             .map(SimpleGrantedAuthority::new)

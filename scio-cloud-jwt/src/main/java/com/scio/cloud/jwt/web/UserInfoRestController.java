@@ -12,7 +12,12 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 public class UserInfoRestController {
-
+  /**
+   * get current user info
+   *
+   * @param principal
+   * @return
+   */
   @RequestMapping("/info")
   public String info(Principal principal) {
     return principal.getName();

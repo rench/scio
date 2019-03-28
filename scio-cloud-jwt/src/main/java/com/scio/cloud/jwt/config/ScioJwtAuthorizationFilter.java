@@ -12,16 +12,23 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
-import com.scio.cloud.jwt.util.JwtTokenUtils;
+import com.scio.cloud.jwt.util.ScioJwtTokenUtils;
 
 /**
- * JwtAuthenticationFilter
+ * JwtAuthorizationFilter to create authorization token
  *
+ * <pre>
+ * public UsernamePasswordAuthenticationFilter() {
+ *   super(new AntPathRequestMatcher("/login", "POST"));
+ * }
+ * </pre>
+ *
+ * @see UsernamePasswordAuthenticationFilter
  * @author Wang.ch
  * @date 2019-03-27 17:23:37
  */
-public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
-
+public class ScioJwtAuthorizationFilter extends UsernamePasswordAuthenticationFilter {
+  /** successful authentication then create and return a token */
   @Override
   protected void successfulAuthentication(
       HttpServletRequest request,
@@ -31,7 +38,7 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
       throws IOException, ServletException {
     SecurityContextHolder.getContext().setAuthentication(authResult);
     User user = (User) authResult.getPrincipal();
-    String token = JwtTokenUtils.createToken(user.getUsername(), user.getAuthorities(), false);
-    response.setHeader(JwtTokenUtils.TOKEN_HEADER, token);
+    String token = ScioJwtTokenUtils.createToken(user.getUsername(), user.getAuthorities(), false);
+    response.setHeader(ScioJwtTokenUtils.TOKEN_HEADER, token);
   }
 }
