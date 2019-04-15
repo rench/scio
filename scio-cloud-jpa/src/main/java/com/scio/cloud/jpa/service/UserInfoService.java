@@ -1,5 +1,7 @@
 package com.scio.cloud.jpa.service;
 
+import java.util.List;
+
 import com.scio.cloud.jpa.web.vo.UserInfoVo;
 
 /**
@@ -16,6 +18,13 @@ public interface UserInfoService {
    * @return
    */
   UserInfoVo save(UserInfoVo vo);
+  /**
+   * save or update user info
+   *
+   * @param vo
+   * @return
+   */
+  List<UserInfoVo> save(List<UserInfoVo> userinfos);
   /**
    * find user info by user id
    *

@@ -1,5 +1,9 @@
 package com.scio.cloud.jpa.web;
 
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
 import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -43,6 +47,28 @@ public class UserInfoRestController {
     vo.setStatus(UserStatus.NORMAL);
     vo = userinfo.save(vo);
     return vo;
+  }
+
+  /**
+   * save user info
+   *
+   * @return
+   */
+  @RequestMapping("/batchSave")
+  public List<UserInfoVo> batchSave() {
+    List<UserInfoVo> userinfos =
+        Stream.of(1, 2, 3)
+            .map(
+                i -> {
+                  UserInfoVo vo = new UserInfoVo();
+                  vo.setUsername(RandomStringUtils.randomAlphabetic(12));
+                  vo.setPassword(RandomStringUtils.randomAlphabetic(12));
+                  vo.setRealname(RandomStringUtils.random(5, true, false));
+                  vo.setStatus(UserStatus.NORMAL);
+                  return vo;
+                })
+            .collect(Collectors.toList());
+    return userinfo.save(userinfos);
   }
   /**
    * find user info
