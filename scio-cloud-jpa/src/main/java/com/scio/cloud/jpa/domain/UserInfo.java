@@ -11,6 +11,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 
 import com.scio.cloud.jpa.domain.enums.UserStatus;
 /**
@@ -20,7 +21,9 @@ import com.scio.cloud.jpa.domain.enums.UserStatus;
  * @date 2019-04-15 09:36:54
  */
 @Entity
-@Table(name = "user_info")
+@Table(
+    name = "user_info",
+    uniqueConstraints = {@UniqueConstraint(columnNames = "username")})
 public class UserInfo implements Serializable {
   /** */
   private static final long serialVersionUID = 3476779772816848178L;
