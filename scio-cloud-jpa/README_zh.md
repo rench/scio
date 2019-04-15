@@ -4,36 +4,36 @@
 [![GitHub stars](https://img.shields.io/github/stars/rench/scio.svg?style=social&label=Stars)](https://github.com/rench/scio)
 [![GitHub forks](https://img.shields.io/github/forks/rench/scio.svg?style=social&label=Fork)](https://github.com/rench/scio)
 
-# scio-cloud-jpa [中文](https://github.com/rench/scio/tree/master/scio-cloud-jpa/README_zh.md)
+# scio-cloud-jpa [English](https://github.com/rench/scio/tree/master/scio-cloud-jpa/README.md)
 > https://github.com/rench/scio/tree/master/scio-cloud-jpa
 ------
 
-The JpaRepository provided by SpringDataJpa is very powerful. The commonly used additions, deletions and changes have been fully used, but in actual development, some custom **Repository** is often used. For normal development, we only need to define **Repository** interface, plus a **@Repository** annotation, SpringDataJpa will automatically generate a proxy instance for Jpa for us. If we need to customize it, we need to make some changes and configuration.
+SpringDataJpa提供的JpaRepository已经非常强大，常用的增删查改已经完全够用，但是在实际开发中，经常会用到一些自定义的**Repository**，正常的开发时，我们只需要定义**Repository**接口，加上一个**@Repository**注解，SpringDataJpa则会自动帮我们生成Jpa的代理实例，如果我们需要自定义，则需要做一些改变和配置。
 
-> * SpringDataJPA mechanism and principle
-> * How to write a custom Repository
-> * How to use a custom Repository
-> * Considerations for using a custom Repository
+> * SpringDataJPA机制和原理
+> * 如何编写自定义Repository
+> * 如何使用自定义的Repository
+> * 使用自定义Repository需要注意的地方
 
 ------
 
-## SpringDataJPA mechanism and principle
+## SpringDataJPA机制和原理
 
-JPA is the Java Persistence API, Java Persistence API, which is a set of interfaces and a set of standards introduced by Sun. Hibernate is a concrete ORM persistence layer framework that implements the JPA interface.
+JPA是Java Persistence API，Java持久化API，是SUN公司推出的一套接口，一套标准。Hibernate是一个具体的ORM的持久层框架，实现了JPA接口。
 
-Spring-data-jpa has many advantages, such as inheriting the Repository interface, writing JPQL statements in annotations to access the database; supporting method name resolution to access the database; using Predicate to support dynamic queries, etc., not listed here. These are all advantages of using spring-data-jpa. To use it better and more elegant, we must explore the loading and running mechanism of spring-data-jpa.
+spring-data-jpa的优点很多，比如继承Repository接口，在注解中书写JPQL语句即可访问数据库；支持方法名解析方式访问数据库；使用Predicate支持动态查询等，在此不一一列举了。这些都是使用spring-data-jpa中的种种优点，要想将之使用的更好更优雅，就要从spring-data-jpa的加载和运行机制进行探秘。
 
-Spring-data-jpa seamlessly interfaces with the springframework framework at runtime. When generating a Repository instance using Spring's @Repository annotation, the Repository interface is instantiated using the dynamic proxy class and placed in the spring container for later use. The main categories of concern are as follows:
+spring-data-jpa在运行时和springframework框架实现了无缝对接。在使用spring的@Repository注解生成Repository实例时，使用动态代理类的方式对Repository接口进行了实例化并放入spring容器中备用。主要关注的几个类，如下：
 
 - RepositoryFactoryBeanSupport
 - RepositoryBeanDefinitionBuilder
 - RepositoryFactorySupport
 - RepositoryProxyPostProcessor
 
-## How to write a custom Repository
+## 如何编写自定义的Repository
 > https://docs.spring.io/spring-data/jpa/docs/1.5.3.RELEASE/reference/html/repositories.html#repositories.custom-implementations
 
-- **UserInfoJpaRepositoryCustom**, need to implement a custom Repository, also need to define an interface, and an implementation class. E.g:
+- **UserInfoJpaRepositoryCustom**，需要实现自定义的Repository，同样需要定义个接口，和一个实现类。例如：
 
 ```
 /**
@@ -52,7 +52,7 @@ public interface UserInfoJpaRepositoryCustom {
   List<UserInfo> batchSave(List<UserInfo> userinfos);
 }
 ```
-- **UserInfoJpaRepositoryImpl**, you need to write an implementation class to implement a custom method.
+- **UserInfoJpaRepositoryImpl**，需要编写一个实现类，实现自定义方法。
 ```
 /**
  * user info custom implementation
@@ -72,10 +72,8 @@ public class UserInfoJpaRepositoryImpl implements UserInfoJpaRepositoryCustom {
   }
 }
 ```
-> Custom implementations are automatically loaded and instantiated by SpringDataJpa, managed by Spring, and custom implementation classes can still use annotations to inject the required instances of the association.
-
-- **UserInfoJpaRepository**, the interface that is mainly annotated by **@Repository** needs to be adjusted, as follows:
-
+> 自定义的实现方法会被SpringDataJpa自动加载和实例化，由Spring管理，自定义实现类依然可以使用注解注入需要的关联的实例。
+- **UserInfoJpaRepository**，主要被**@Repository**注解的接口需要进行调整，如下：
 ```
 /**
  * user info jpa repository
@@ -95,16 +93,16 @@ public interface UserInfoJpaRepository
   Optional<UserInfo> findByUsername(String username);
 }
 ```
-> In addition to inheriting the **JpaRepository** interface provided by SpringDatJpa, this interface also inherits **UserInfoJpaRepositoryCustom**.
+> 该接口除了继承SpringDatJpa提供的**JpaRepository**接口外，还继承了**UserInfoJpaRepositoryCustom**
+。
 
-## How to use a custom Repository
+## 如何使用自定义的Repository
 
-Use a custom Repository, the same as before without customization, and inject it where you need to inject the Repository.
+使用自定义Repository，和没有自定义以前是一样的，在需要注入Repository的地方注入即可。
 
-## Considerations for using a custom Repository
+## 使用自定义Repository需要注意的地方
 
-1. When implementing a custom method, the SpringDataJpa default scan loads the interface class name +Impl annotated with **@Repository**. The configuration that can be changed is Impl, as follows:
-
+1. 在实现自定义方法的时候，SpringDataJpa默认扫描加载的是是以**@Repository**注解的接口类名称+Impl。可以更改配置的是Impl，如下：
 ```
 @SpringBootApplication
 @ComponentScan(basePackages = "com.scio.cloud.jpa")
@@ -118,7 +116,7 @@ public class ScioJpaApplication {
   }
 }
 ```
-2. Custom implementation classes do not need to manually add annotations such as **@Component**.
-3. The processing logic for custom implementation class scans is:
+2. 自定义实现类不需要手动添加**@Component**等注解。
+3. 自定义实现类扫描的处理逻辑在：
 > RepositoryBeanDefinitionBuilder::registerCustomImplementation
 > CustomRepositoryImplementationDetector
