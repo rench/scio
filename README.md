@@ -48,7 +48,7 @@
 - [x] scio-cloud-jwt 8007
 
 ### orm
-- [ ] jpa
+- [x] scio-cloud-jpa 7992
 - [ ] querydsl
 - [ ] jooq
 - [ ] mybatis-plus

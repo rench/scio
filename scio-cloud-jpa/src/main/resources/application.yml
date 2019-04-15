@@ -1,0 +1,40 @@
+logging:
+  file: ${spring.application.name}.log
+  level:
+     root: INFO
+     com:
+        scio: DEBUG
+server:
+   port: 7992
+eureka:
+  instance:
+    hostname: localhost
+  client:
+    registerWithEureka: false
+    fetchRegistry: false
+    serviceUrl:
+      defaultZone: http://${eureka.instance.hostname}:8001/eureka/
+spring:
+   application:
+      name: scio-cloud-jpa
+   profiles:
+      active: dev
+   datasource:
+      #url: jdbc:mysql://localhost:3306/db_user?useUnicdoe=true&characterEncoding=utf-8&useSSL=true
+      url: jdbc:h2:file:~/.h2/db_user
+      username: root
+      password: root
+      sql-script-encoding: utf-8
+      testWhileIdle: true
+      validationQuery: select 1
+      initialize: false
+   jpa:
+      generate-ddl: true
+      hibernate:
+        ddl-auto: update
+        use-new-id-generator-mappings: false
+      show-sql: false
+      properties:
+         hibernate:
+           format_sql: false
+           #dialect: com.scio.cloud.jpa.config.MySQL5PlusDialect # for mysql
