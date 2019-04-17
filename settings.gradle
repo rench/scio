@@ -38,3 +38,4 @@ include 'scio-cloud-remember-me'
 include 'scio-cloud-jwt'
 
 include 'scio-cloud-jpa'
+include 'scio-cloud-querydsl'
