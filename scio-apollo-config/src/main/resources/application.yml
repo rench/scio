@@ -8,6 +8,6 @@ server:
    port: 7999
 spring:
    application:
-      name: scio-nacos-config
+      name: scio-apollo-config
    profiles:
       active: dev

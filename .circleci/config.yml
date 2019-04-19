@@ -11,4 +11,4 @@ jobs:
       - checkout
       - run:
           name: "build jar"
-          command: gradle build -x test
+          command: gradle build -x test -x compileQuerydsl
