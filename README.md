@@ -49,8 +49,8 @@
 
 ### orm
 - [x] scio-cloud-jpa 7992
-- [ ] querydsl
-- [ ] jooq
+- [x] scio-cloud-querydsl
+- [x] scio-cloud-jooq
 - [ ] mybatis-plus
 - [ ] BeetlSQL
 

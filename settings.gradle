@@ -39,3 +39,4 @@ include 'scio-cloud-jwt'
 
 include 'scio-cloud-jpa'
 include 'scio-cloud-querydsl'
+include 'scio-cloud-jooq'

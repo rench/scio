@@ -1,0 +1,83 @@
+buildscript{
+    repositories {
+        maven { 
+            url 'http://maven.aliyun.com/nexus/content/groups/public'
+            url 'https://plugins.gradle.org/m2/'
+        }
+        
+        mavenCentral()
+    }
+    dependencies {
+        classpath 'nu.studer:gradle-jooq-plugin:3.0.3'
+        classpath 'mysql:mysql-connector-java:8.0.13'
+        classpath 'com.h2database:h2:1.4.199'
+    }
+}
+
+apply plugin: 'org.springframework.boot'
+// https://github.com/etiennestuder/gradle-jooq-plugin
+// gradle generateDbUserJooqSchemaSource
+apply plugin: 'nu.studer.jooq'
+
+dependencies {
+    compile 'org.springframework.boot:spring-boot-starter-web'
+    compile 'org.springframework.boot:spring-boot-starter-actuator'
+    compile 'org.springframework.boot:spring-boot-starter-security'
+    compile 'org.springframework.boot:spring-boot-starter-data-jpa'
+    compile 'com.h2database:h2'
+    compile group: 'org.apache.commons', name: 'commons-lang3', version: '3.8.1'
+    compile group: 'org.apache.commons', name: 'commons-lang3', version: '3.8.1'
+    compile group: 'org.apache.commons', name: 'commons-collections4', version: '4.2'
+    compile group: 'commons-beanutils', name: 'commons-beanutils', version: '1.9.3'
+    
+    compile 'org.springframework.boot:spring-boot-starter-jooq'
+    compile 'org.modelmapper.extensions:modelmapper-jooq:2.3.0'
+    jooqRuntime 'com.h2database:h2:1.4.199'
+    
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+}
+
+jooq {
+  version = '3.11.9'
+  edition = 'OSS'
+  dbUser(sourceSets.main) {
+    jdbc {
+      driver = 'org.h2.Driver'
+      url = 'jdbc:h2:~/.h2/db_user'
+      user = 'root'
+      password = 'root'
+      properties {
+        property {
+          key = 'ssl'
+          value = 'true'
+        }
+      }
+    }
+    generator {
+      name = 'org.jooq.codegen.DefaultGenerator'
+      strategy {
+        name = 'org.jooq.codegen.DefaultGeneratorStrategy'
+        // ...
+      }
+      database {
+        name = 'org.jooq.meta.h2.H2Database'
+        inputSchema = ''
+        includes = 'user_info'
+        // ...
+      }
+      generate {
+        relations = true
+        deprecated = false
+        records = true
+        immutablePojos = true
+        fluentSetters = true
+        daos = true
+        // ...
+      }
+      target {
+        packageName = 'com.scio.cloud.jooq.domain'
+        directory = 'src/main/java'
+      }
+    }
+  }
+}
