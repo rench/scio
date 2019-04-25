@@ -52,7 +52,7 @@
 - [x] scio-cloud-querydsl 7992
 - [x] scio-cloud-jooq 7992
 - [x] scio-cloud-mybatisplus 7992
-- [ ] BeetlSQL
+- [x] scio-cloud-beetlsql 7992
 
 ### distributed database
 - [ ] sharding-jdbc
