@@ -49,9 +49,9 @@
 
 ### orm
 - [x] scio-cloud-jpa 7992
-- [x] scio-cloud-querydsl
-- [x] scio-cloud-jooq
-- [ ] mybatis-plus
+- [x] scio-cloud-querydsl 7992
+- [x] scio-cloud-jooq 7992
+- [x] scio-cloud-mybatisplus 7992
 - [ ] BeetlSQL
 
 ### distributed database

@@ -1,7 +1,7 @@
 logging:
   file: ${spring.application.name}.log
   level:
-     root: INFO
+     root: DEBUG
      com:
         scio: DEBUG
 server:
@@ -16,12 +16,12 @@ eureka:
       defaultZone: http://${eureka.instance.hostname}:8001/eureka/
 spring:
    application:
-      name: scio-cloud-jpa
+      name: scio-cloud-mybatisplus
    profiles:
       active: dev
    datasource:
       #url: jdbc:mysql://localhost:3306/db_user?useUnicdoe=true&characterEncoding=utf-8&useSSL=true
-      url: jdbc:h2:file:~/.h2/db_user
+      url: jdbc:h2:file:~/.h2/db_user_test
       username: root
       password: root
       sql-script-encoding: utf-8
@@ -33,10 +33,8 @@ spring:
       hibernate:
         ddl-auto: update
         use-new-id-generator-mappings: false
-      show-sql: false
+      show-sql: true
       properties:
          hibernate:
-           format_sql: false
+           format_sql: true
            #dialect: com.scio.cloud.jpa.config.MySQL5PlusDialect # for mysql
-
-spring.h2.console.enabled: true

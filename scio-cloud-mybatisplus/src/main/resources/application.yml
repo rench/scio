@@ -16,7 +16,7 @@ eureka:
       defaultZone: http://${eureka.instance.hostname}:8001/eureka/
 spring:
    application:
-      name: scio-cloud-jpa
+      name: scio-cloud-mybatisplus
    profiles:
       active: dev
    datasource:
@@ -33,10 +33,8 @@ spring:
       hibernate:
         ddl-auto: update
         use-new-id-generator-mappings: false
-      show-sql: false
+      show-sql: true
       properties:
          hibernate:
            format_sql: false
            #dialect: com.scio.cloud.jpa.config.MySQL5PlusDialect # for mysql
-
-spring.h2.console.enabled: true
