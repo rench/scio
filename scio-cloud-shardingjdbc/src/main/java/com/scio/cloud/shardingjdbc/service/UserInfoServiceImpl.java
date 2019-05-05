@@ -61,4 +61,13 @@ public class UserInfoServiceImpl implements UserInfoService {
         .map(info -> BeanCopyUtils.copy(info, UserInfoVo::new))
         .collect(Collectors.toList());
   }
+
+  @Override
+  public List<UserInfoVo> findAll() {
+    return userinfo
+        .findAll()
+        .stream()
+        .map(info -> BeanCopyUtils.copy(info, UserInfoVo::new))
+        .collect(Collectors.toList());
+  }
 }

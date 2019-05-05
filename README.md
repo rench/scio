@@ -55,7 +55,7 @@
 - [x] scio-cloud-beetlsql 7992
 
 ### distributed database
-- [ ] sharding-jdbc
+- [x] scio-cloud-shardingjdbc
 - [ ] mycat
 
 ### distributed transaction

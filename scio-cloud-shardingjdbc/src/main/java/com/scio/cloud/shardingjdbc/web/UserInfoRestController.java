@@ -84,4 +84,9 @@ public class UserInfoRestController {
     UserInfoVo vo = userinfo.findByName(name);
     return vo;
   }
+
+  @RequestMapping("/findAll")
+  public List<UserInfoVo> findAll() {
+    return userinfo.findAll();
+  }
 }

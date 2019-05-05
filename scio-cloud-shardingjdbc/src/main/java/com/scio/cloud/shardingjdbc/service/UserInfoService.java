@@ -39,4 +39,10 @@ public interface UserInfoService {
    * @return
    */
   UserInfoVo findByName(String name);
+  /**
+   * findAll
+   *
+   * @return
+   */
+  List<UserInfoVo> findAll();
 }
