@@ -6,7 +6,7 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 /**
  * scio-cloud-shardingjdbc
- *
+ * @doc https://shardingsphere.apache.org/document/current/cn/manual/sharding-jdbc/configuration/config-yaml/
  * @doc 2.1.2 https://docs.spring.io/spring-data/jpa/docs/2.1.2.RELEASE/reference/html/
  * @author Wang.ch
  * @date 2019-4-15 09:15:52

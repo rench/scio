@@ -56,14 +56,15 @@
 
 ### distributed database
 - [x] scio-cloud-shardingjdbc
-- [ ] mycat
+- [x] [mycat](https://github.com/MyCATApache/Mycat-Server)
 
 ### distributed transaction
+- [ ] seata
 - [ ] byteTCC
 - [ ] raincat
 - [ ] hmily
 - [ ] myth
-- [ ] fescar
+
 
 ### distributed lock
 - [ ] redisson-redis-lock
@@ -76,3 +77,5 @@
 
 - https://github.com/spring-cloud-incubator/spring-cloud-alibaba
 - https://github.com/marcosbarbero/spring-cloud-zuul-ratelimit
+- https://github.com/seata/seata
+- https://github.com/MyCATApache/Mycat-Server
