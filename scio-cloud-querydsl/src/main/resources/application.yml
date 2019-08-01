@@ -3,7 +3,7 @@ logging:
   level:
      root: INFO
      com:
-        scio: DEBUG
+        scio: INFO
 server:
    port: 7992
 eureka:

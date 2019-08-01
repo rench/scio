@@ -10,6 +10,7 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 import com.querydsl.jpa.impl.JPAQueryFactory;
+import com.scio.cloud.querydsl.config.ScioJPAQueryFactory;
 /**
  * scio-cloud-querydsl
  *
@@ -39,5 +40,17 @@ public class ScioQuerydslApplication {
   @Autowired
   public JPAQueryFactory jpaQuery(EntityManager entityManager) {
     return new JPAQueryFactory(entityManager);
+  }
+
+  /**
+   * return JPAQueryFactory
+   *
+   * @param entityManager
+   * @return
+   */
+  @Bean
+  @Autowired
+  public ScioJPAQueryFactory scioJpaQuery(EntityManager entityManager) {
+    return new ScioJPAQueryFactory(entityManager);
   }
 }

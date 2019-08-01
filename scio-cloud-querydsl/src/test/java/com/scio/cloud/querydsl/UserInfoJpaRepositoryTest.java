@@ -16,7 +16,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.querydsl.jpa.impl.JPAQueryFactory;
+import com.scio.cloud.querydsl.config.ScioJPAQueryFactory;
 import com.scio.cloud.querydsl.domain.QUserInfo;
 import com.scio.cloud.querydsl.domain.UserInfo;
 import com.scio.cloud.querydsl.repository.UserInfoJpaRepository;
@@ -47,7 +47,7 @@ public class UserInfoJpaRepositoryTest {
   @Rollback
   @Transactional(isolation = Isolation.READ_COMMITTED)
   public void testFindAll() throws Exception {
-    JPAQueryFactory dsl = new JPAQueryFactory(entityManager.getEntityManager());
+    ScioJPAQueryFactory dsl = new ScioJPAQueryFactory(entityManager.getEntityManager());
     testSave();
     List<UserInfoVo> list = service.findAll();
     assertThat(list).isNotEmpty();
@@ -62,9 +62,10 @@ public class UserInfoJpaRepositoryTest {
     //            .where(QUserInfo.userInfo.id.eq(list.get(0).getId()))
     //            .execute();
     //    assertThat(affectedRows).isEqualByComparingTo(1L);
+    boolean useIdQuery = true;
     UserInfo userinfo =
         dsl.selectFrom(QUserInfo.userInfo)
-            .where(QUserInfo.userInfo.id.eq(list.get(0).getId()))
+            .whereIfTrue(useIdQuery, QUserInfo.userInfo.id.eq(list.get(0).getId()))
             .fetchOne();
     assertThat(userinfo.getPassword()).isEqualTo("scio@1234");
     list = service.findAll();

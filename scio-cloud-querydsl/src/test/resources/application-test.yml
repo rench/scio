@@ -1,7 +1,7 @@
 logging:
   file: ${spring.application.name}.log
   level:
-     root: DEBUG
+     root: INFO
      com:
         scio: DEBUG
 server:
