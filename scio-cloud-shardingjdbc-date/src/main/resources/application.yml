@@ -16,7 +16,7 @@ eureka:
       defaultZone: http://${eureka.instance.hostname}:8001/eureka/
 spring:
    application:
-      name: scio-cloud-shardingjdbc
+      name: scio-cloud-shardingjdbc-date
    profiles:
       active: dev
    jpa:
