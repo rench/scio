@@ -45,3 +45,5 @@ include 'scio-cloud-beetlsql'
 
 
 include 'scio-cloud-shardingjdbc'
+
+include 'scio-cloud-shardingjdbc-date'
